@@ -23,8 +23,23 @@ const spaceGrotesk = Space_Grotesk({
   preload: true,
 })
 
+// Helper to safely get the base URL
+function getBaseUrl(): string {
+  const url = process.env.NEXT_PUBLIC_SITE_URL?.trim()
+  if (!url) return 'https://stylofront.com'
+  
+  // Validate URL format
+  try {
+    const parsed = new URL(url)
+    return parsed.origin
+  } catch {
+    // If invalid, return default
+    return 'https://stylofront.com'
+  }
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://stylofront.com'),
+  metadataBase: new URL(getBaseUrl()),
   title: {
     default: 'StyloFront Theme Generator - Create Design Systems in Seconds',
     template: '%s | StyloFront Theme Generator',

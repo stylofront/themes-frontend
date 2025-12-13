@@ -4,7 +4,15 @@ import { MetadataRoute } from 'next'
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://stylofront.com'
+  // Safely get base URL with validation
+  let baseUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim() || 'https://stylofront.com'
+  
+  // Validate URL format
+  try {
+    new URL(baseUrl)
+  } catch {
+    baseUrl = 'https://stylofront.com'
+  }
   
   return [
     {

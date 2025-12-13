@@ -63,12 +63,24 @@ jobs:
       - name: Set site URL and base path
         id: site-config
         run: |
+          # Get site URL from secret or use default
           if [ -n "${{ secrets.NEXT_PUBLIC_SITE_URL }}" ]; then
             SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL }}"
           else
             SITE_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
           fi
+          
+          # Trim whitespace and validate URL format
+          SITE_URL=$(echo "$SITE_URL" | xargs)
+          
+          # Validate URL format
+          if [[ ! "$SITE_URL" =~ ^https?:// ]]; then
+            echo "Warning: SITE_URL doesn't start with http:// or https://, using default"
+            SITE_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          fi
+          
           echo "url=$SITE_URL" >> $GITHUB_OUTPUT
+          echo "Site URL set to: $SITE_URL"
           
           # Determine base path: empty for custom domains, /themes-frontend for github.io
           if [[ "$SITE_URL" == *"github.io"* ]]; then
