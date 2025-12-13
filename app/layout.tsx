@@ -119,7 +119,7 @@ export const metadata: Metadata = {
     canonical: process.env.NEXT_PUBLIC_SITE_URL || 'https://stylofront.com',
   },
   verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION,
+    google: process.env.GOOGLE_SITE_VERIFICATION || 'googlef5c90b0ba34f5df5',
   },
 }
 
@@ -134,6 +134,8 @@ export default function RootLayout({
         <link rel="icon" href="/logo2.png" type="image/png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="manifest" href="/manifest.json" />
+        {/* Google Search Console Verification */}
+        <meta name="google-site-verification" content="googlef5c90b0ba34f5df5" />
       </head>
       <body className={`${spaceGrotesk.className} antialiased`}>
         {/* Google Analytics */}
