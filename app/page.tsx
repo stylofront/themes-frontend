@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     siteName: 'StyloFront Theme Generator',
     images: [
       {
-        url: '/ogimage.png',
+        url: 'https://theme.stylofront.site/ogimage.png',
         width: 1200,
         height: 630,
         alt: 'StyloFront Theme Generator',
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'StyloFront Theme Generator - Create Design Systems in Seconds',
     description: 'Developer-first UI theme generator. Create production-ready design systems with visual controls.',
-    images: ['/ogimage.png'],
+    images: ['https://theme.stylofront.site/ogimage.png'],
   },
   alternates: {
     canonical: '/',

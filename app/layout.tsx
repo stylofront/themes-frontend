@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Outfit, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/providers/theme-provider'
@@ -90,7 +91,7 @@ export const metadata: Metadata = {
     description: 'Developer-first UI theme generator. Create production-ready design systems with visual controls. Export CSS, SCSS, SASS, or JSON.',
     images: [
       {
-        url: '/ogimage.png',
+        url: 'https://theme.stylofront.site/ogimage.png',
         width: 1200,
         height: 630,
         alt: 'StyloFront Theme Generator',
@@ -101,7 +102,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'StyloFront Theme Generator - Create Design Systems in Seconds',
     description: 'Developer-first UI theme generator. Create production-ready design systems with visual controls.',
-    images: ['/ogimage.png'],
+    images: ['https://theme.stylofront.site/ogimage.png'],
     creator: '@stylofront',
   },
   icons: {
@@ -135,6 +136,20 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`${spaceGrotesk.className} antialiased`}>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-N9E3L7KHPN"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-N9E3L7KHPN');
+          `}
+        </Script>
+        
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
