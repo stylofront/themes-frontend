@@ -72,7 +72,7 @@ jobs:
           
           # Determine base path: empty for custom domains, /themes-frontend for github.io
           if [[ "$SITE_URL" == *"github.io"* ]]; then
-            BASE_PATH="/themes-frontend"
+            BASE_PATH=""
           else
             BASE_PATH=""
           fi
