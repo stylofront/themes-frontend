@@ -75,10 +75,37 @@ A powerful, developer-first UI theme generator for creating production-ready des
 ## 📜 Available Scripts
 
 - `npm run dev` - Start development server with Turbopack
-- `npm run build` - Build for production
-- `npm run start` - Start production server
+- `npm run build` - Build for production (static export)
+- `npm run export` - Alias for build (static export)
+- `npm run start` - Start production server (not used for static export)
 - `npm run lint` - Run ESLint
 - `npm run wasm-build` - Build WebAssembly module
+
+## 🚀 Deployment
+
+### GitHub Pages
+
+This project is configured for GitHub Pages deployment.
+
+**Quick Setup:**
+1. Enable GitHub Pages in repository settings (Source: GitHub Actions)
+2. Set `NEXT_PUBLIC_SITE_URL` secret in repository settings
+3. Push to `main` branch - deployment happens automatically!
+
+**Documentation:**
+- [Quick Setup Guide](GITHUB_PAGES_SETUP.md) - Get started in 5 minutes
+- [Full Deployment Guide](DEPLOYMENT.md) - Detailed instructions and troubleshooting
+
+### Environment Variables
+
+Create a `.env.local` file for local development (see `env.example`):
+
+```env
+NEXT_PUBLIC_SITE_URL=https://yourusername.github.io
+NEXT_PUBLIC_GOOGLE_FONTS_API_KEY=your_key_here  # Optional
+```
+
+For GitHub Pages, set these as **Secrets** in your repository settings.
 
 ## 📁 Project Structure
 

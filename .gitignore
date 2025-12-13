@@ -10,7 +10,8 @@
 
 # next.js
 /.next/
-/out/
+# /out/ - Commented out to allow GitHub Pages deployment
+# The out directory is needed for GitHub Actions deployment
 
 # production
 /build

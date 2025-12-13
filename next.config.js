@@ -1,13 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Enable static export for GitHub Pages
+  output: 'export',
+  // Set basePath if deploying to a subdirectory (e.g., /themes-frontend)
+  // Uncomment and update if your repo name is not the root
+  // basePath: process.env.NODE_ENV === 'production' ? '/themes-frontend' : '',
+  // Set trailingSlash for GitHub Pages compatibility
+  trailingSlash: true,
+  // Disable image optimization for static export
+  images: {
+    unoptimized: true,
+  },
   // Add empty turbopack config to silence the warning
   turbopack: {},
-  images: {
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-  },
   webpack: (config, { isServer }) => {
     // Enable WASM support
     config.experiments = {
