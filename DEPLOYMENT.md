@@ -111,11 +111,25 @@ https://yourusername.github.io/themes-frontend
 
 ### Custom Domain
 
-If you're using a custom domain:
+If you're using a custom domain (e.g., `theme.stylofront.site`):
 
-1. Update `NEXT_PUBLIC_SITE_URL` secret to your custom domain
-2. Add a `CNAME` file in the `public` folder with your domain name
-3. Configure DNS settings as per GitHub Pages documentation
+1. **Configure in GitHub**:
+   - Go to repository **Settings** → **Pages**
+   - Under **Custom domain**, enter your domain (e.g., `theme.stylofront.site`)
+   - GitHub will automatically create a CNAME file
+
+2. **Set Environment Variable**:
+   - Update `NEXT_PUBLIC_SITE_URL` secret to your custom domain
+   - Example: `https://theme.stylofront.site`
+   - The workflow will automatically detect custom domains and set `basePath` to empty
+
+3. **DNS Configuration**:
+   - Configure your DNS records as per GitHub Pages documentation
+   - Add CNAME record pointing to `yourusername.github.io`
+
+**Note**: The `basePath` is automatically set based on your domain:
+- Custom domain → `basePath: ''` (empty)
+- GitHub Pages subdirectory → `basePath: '/themes-frontend'`
 
 ## Troubleshooting
 

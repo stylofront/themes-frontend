@@ -60,19 +60,28 @@ jobs:
       - name: Build WASM module
         run: npm run wasm-build
 
-      - name: Set site URL
-        id: site-url
+      - name: Set site URL and base path
+        id: site-config
         run: |
           if [ -n "${{ secrets.NEXT_PUBLIC_SITE_URL }}" ]; then
-            echo "url=${{ secrets.NEXT_PUBLIC_SITE_URL }}" >> $GITHUB_OUTPUT
+            SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL }}"
           else
-            echo "url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
+            SITE_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          fi
+          echo "url=$SITE_URL" >> $GITHUB_OUTPUT
+          
+          # Determine base path: empty for custom domains, /themes-frontend for github.io
+          if [[ "$SITE_URL" == *"github.io"* ]]; then
+            echo "base_path=/themes-frontend" >> $GITHUB_OUTPUT
+          else
+            echo "base_path=" >> $GITHUB_OUTPUT
           fi
 
       - name: Build with Next.js
         env:
           NODE_ENV: production
-          NEXT_PUBLIC_SITE_URL: ${{ steps.site-url.outputs.url }}
+          NEXT_PUBLIC_SITE_URL: ${{ steps.site-config.outputs.url }}
+          BASE_PATH: ${{ steps.site-config.outputs.base_path }}
           NEXT_PUBLIC_GOOGLE_FONTS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY }}
         run: npm run build
 
