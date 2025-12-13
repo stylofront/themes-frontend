@@ -102,6 +102,39 @@ jobs:
           echo "Building with NEXT_PUBLIC_SITE_URL: '$NEXT_PUBLIC_SITE_URL'"
           npm run build
 
+      - name: Verify build output
+        run: |
+          if [ ! -d "out" ]; then
+            echo "ERROR: out directory not found!"
+            exit 1
+          fi
+          if [ ! -f "out/index.html" ]; then
+            echo "ERROR: index.html not found in out directory!"
+            exit 1
+          fi
+          echo "Build output verified:"
+          ls -la out/ | head -20
+          echo "Total files in out: $(find out -type f | wc -l)"
+
+      - name: Verify build output
+        run: |
+          echo "Checking build output..."
+          if [ ! -d "out" ]; then
+            echo "❌ ERROR: out directory not found!"
+            exit 1
+          fi
+          if [ ! -f "out/index.html" ]; then
+            echo "❌ ERROR: index.html not found in out directory!"
+            ls -la out/
+            exit 1
+          fi
+          echo "✅ Build output verified:"
+          echo "   - out directory exists"
+          echo "   - index.html found"
+          echo "   - Total files: $(find out -type f | wc -l)"
+          echo "   - Sample files:"
+          ls -la out/ | head -10
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -117,4 +150,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      
+      - name: Deployment status
+        run: |
+          echo "✅ Deployment completed!"
+          echo "🌐 Site URL: ${{ steps.deployment.outputs.page_url }}"
 
