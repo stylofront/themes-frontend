@@ -19,8 +19,9 @@ Follow these steps to deploy your theme generator to GitHub Pages:
 
 **Name:** `NEXT_PUBLIC_SITE_URL`  
 **Value:** Your GitHub Pages URL
-- If repository is `yourusername/themes-frontend`: `https://yourusername.github.io/themes-frontend`
+- **For this repository** (`stylofront/themes-frontend`): `https://stylofront.github.io/themes-frontend`
 - If repository is `yourusername/yourusername.github.io`: `https://yourusername.github.io`
+- If repository is `yourusername/repo-name`: `https://yourusername.github.io/repo-name`
 
 ### Optional Secret
 
