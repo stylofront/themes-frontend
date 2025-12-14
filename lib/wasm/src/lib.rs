@@ -43,7 +43,7 @@ pub fn generate_css(theme_json: &str) -> String {
     if let Some(spacing) = theme["baseTokens"]["spacing"].as_array() {
         for token in spacing {
             if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
-                css.push_str(&format!("  --space-{}: {};\n", name, value));
+                css.push_str(&format!("  --sf-space-{}: {};\n", name, value));
             }
         }
     }
@@ -52,7 +52,7 @@ pub fn generate_css(theme_json: &str) -> String {
     if let Some(radius) = theme["baseTokens"]["radius"].as_array() {
         for token in radius {
             if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
-                css.push_str(&format!("  --radius-{}: {};\n", name, value));
+                css.push_str(&format!("  --sf-radius-{}: {};\n", name, value));
             }
         }
     }
@@ -61,7 +61,7 @@ pub fn generate_css(theme_json: &str) -> String {
     if let Some(border_width) = theme["baseTokens"]["borderWidth"].as_array() {
         for token in border_width {
             if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
-                css.push_str(&format!("  --border-{}: {};\n", name, value));
+                css.push_str(&format!("  --sf-border-{}: {};\n", name, value));
             }
         }
     }
@@ -71,12 +71,12 @@ pub fn generate_css(theme_json: &str) -> String {
         // Font families
         if let Some(sans) = theme["fonts"]["sans"].as_object() {
             if let Some(name) = sans["name"].as_str() {
-                css.push_str(&format!("  --font-sans: {}, system-ui, sans-serif;\n", name));
+                css.push_str(&format!("  --sf-font-sans: {}, system-ui, sans-serif;\n", name));
             }
         }
         if let Some(mono) = theme["fonts"]["mono"].as_object() {
             if let Some(name) = mono["name"].as_str() {
-                css.push_str(&format!("  --font-mono: {}, monospace;\n", name));
+                css.push_str(&format!("  --sf-font-mono: {}, monospace;\n", name));
             }
         }
         
@@ -84,7 +84,7 @@ pub fn generate_css(theme_json: &str) -> String {
         if let Some(font_sizes) = typography["fontSizes"].as_array() {
             for token in font_sizes {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
-                    css.push_str(&format!("  --text-{}: {};\n", name, value));
+                    css.push_str(&format!("  --sf-text-{}: {};\n", name, value));
                 }
             }
         }
@@ -93,7 +93,7 @@ pub fn generate_css(theme_json: &str) -> String {
         if let Some(line_heights) = typography["lineHeights"].as_array() {
             for token in line_heights {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
-                    css.push_str(&format!("  --leading-{}: {};\n", name, value));
+                    css.push_str(&format!("  --sf-leading-{}: {};\n", name, value));
                 }
             }
         }
@@ -102,7 +102,7 @@ pub fn generate_css(theme_json: &str) -> String {
         if let Some(font_weights) = typography["fontWeights"].as_array() {
             for token in font_weights {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
-                    css.push_str(&format!("  --font-{}: {};\n", name, value));
+                    css.push_str(&format!("  --sf-font-{}: {};\n", name, value));
                 }
             }
         }
@@ -117,57 +117,57 @@ pub fn generate_css(theme_json: &str) -> String {
     if let Some(colors) = theme["colors"]["light"].as_object() {
         // Primary
         if let Some(primary) = colors["primary"].as_str() {
-            css.push_str(&format!("  --color-primary: {};\n", primary));
+            css.push_str(&format!("  --sf-primary: {};\n", primary));
         }
         if let Some(primary_fg) = colors["primaryFg"].as_str() {
-            css.push_str(&format!("  --color-primary-fg: {};\n", primary_fg));
+            css.push_str(&format!("  --sf-primary-fg: {};\n", primary_fg));
         }
         
         // Secondary
         if let Some(secondary) = colors["secondary"].as_str() {
-            css.push_str(&format!("  --color-secondary: {};\n", secondary));
+            css.push_str(&format!("  --sf-secondary: {};\n", secondary));
         }
         if let Some(secondary_fg) = colors["secondaryFg"].as_str() {
-            css.push_str(&format!("  --color-secondary-fg: {};\n", secondary_fg));
+            css.push_str(&format!("  --sf-secondary-fg: {};\n", secondary_fg));
         }
         
         // Background & Surface
         if let Some(background) = colors["background"].as_str() {
-            css.push_str(&format!("  --color-background: {};\n", background));
+            css.push_str(&format!("  --sf-bg: {};\n", background));
         }
         if let Some(surface) = colors["surface"].as_str() {
-            css.push_str(&format!("  --color-surface: {};\n", surface));
+            css.push_str(&format!("  --sf-surface: {};\n", surface));
         }
         
         // Text
         if let Some(text) = colors["text"].as_str() {
-            css.push_str(&format!("  --color-text: {};\n", text));
+            css.push_str(&format!("  --sf-text: {};\n", text));
         }
         if let Some(muted_text) = colors["mutedText"].as_str() {
-            css.push_str(&format!("  --color-muted-text: {};\n", muted_text));
+            css.push_str(&format!("  --sf-muted-text: {};\n", muted_text));
         }
         
         // Border
         if let Some(border) = colors["border"].as_str() {
-            css.push_str(&format!("  --color-border: {};\n", border));
+            css.push_str(&format!("  --sf-border: {};\n", border));
         }
         
         // Status colors
         if let Some(success) = colors["success"].as_str() {
-            css.push_str(&format!("  --color-success: {};\n", success));
+            css.push_str(&format!("  --sf-success: {};\n", success));
         }
         if let Some(warning) = colors["warning"].as_str() {
-            css.push_str(&format!("  --color-warning: {};\n", warning));
+            css.push_str(&format!("  --sf-warning: {};\n", warning));
         }
         if let Some(error) = colors["error"].as_str() {
-            css.push_str(&format!("  --color-error: {};\n", error));
+            css.push_str(&format!("  --sf-error: {};\n", error));
         }
         
         // Custom colors
         if let Some(custom) = colors["custom"].as_array() {
             for color_obj in custom {
                 if let (Some(name), Some(value)) = (color_obj["name"].as_str(), color_obj["value"].as_str()) {
-                    css.push_str(&format!("  --color-{}: {};\n", name, value));
+                    css.push_str(&format!("  --sf-{}: {};\n", name, value));
                 }
             }
         }
@@ -179,7 +179,7 @@ pub fn generate_css(theme_json: &str) -> String {
         if let Some(default_shadows) = shadows["default"].as_array() {
             for token in default_shadows {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
-                    css.push_str(&format!("  --shadow-{}: {};\n", name, value));
+                    css.push_str(&format!("  --sf-shadow-{}: {};\n", name, value));
                 }
             }
         }
@@ -187,7 +187,7 @@ pub fn generate_css(theme_json: &str) -> String {
         if let Some(custom_shadows) = shadows["custom"].as_array() {
             for token in custom_shadows {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
-                    css.push_str(&format!("  --shadow-{}: {};\n", name, value));
+                    css.push_str(&format!("  --sf-shadow-{}: {};\n", name, value));
                 }
             }
         }
@@ -202,57 +202,57 @@ pub fn generate_css(theme_json: &str) -> String {
     if let Some(colors) = theme["colors"]["dark"].as_object() {
         // Primary
         if let Some(primary) = colors["primary"].as_str() {
-            css.push_str(&format!("  --color-primary: {};\n", primary));
+            css.push_str(&format!("  --sf-primary: {};\n", primary));
         }
         if let Some(primary_fg) = colors["primaryFg"].as_str() {
-            css.push_str(&format!("  --color-primary-fg: {};\n", primary_fg));
+            css.push_str(&format!("  --sf-primary-fg: {};\n", primary_fg));
         }
         
         // Secondary
         if let Some(secondary) = colors["secondary"].as_str() {
-            css.push_str(&format!("  --color-secondary: {};\n", secondary));
+            css.push_str(&format!("  --sf-secondary: {};\n", secondary));
         }
         if let Some(secondary_fg) = colors["secondaryFg"].as_str() {
-            css.push_str(&format!("  --color-secondary-fg: {};\n", secondary_fg));
+            css.push_str(&format!("  --sf-secondary-fg: {};\n", secondary_fg));
         }
         
         // Background & Surface
         if let Some(background) = colors["background"].as_str() {
-            css.push_str(&format!("  --color-background: {};\n", background));
+            css.push_str(&format!("  --sf-bg: {};\n", background));
         }
         if let Some(surface) = colors["surface"].as_str() {
-            css.push_str(&format!("  --color-surface: {};\n", surface));
+            css.push_str(&format!("  --sf-surface: {};\n", surface));
         }
         
         // Text
         if let Some(text) = colors["text"].as_str() {
-            css.push_str(&format!("  --color-text: {};\n", text));
+            css.push_str(&format!("  --sf-text: {};\n", text));
         }
         if let Some(muted_text) = colors["mutedText"].as_str() {
-            css.push_str(&format!("  --color-muted-text: {};\n", muted_text));
+            css.push_str(&format!("  --sf-muted-text: {};\n", muted_text));
         }
         
         // Border
         if let Some(border) = colors["border"].as_str() {
-            css.push_str(&format!("  --color-border: {};\n", border));
+            css.push_str(&format!("  --sf-border: {};\n", border));
         }
         
         // Status colors
         if let Some(success) = colors["success"].as_str() {
-            css.push_str(&format!("  --color-success: {};\n", success));
+            css.push_str(&format!("  --sf-success: {};\n", success));
         }
         if let Some(warning) = colors["warning"].as_str() {
-            css.push_str(&format!("  --color-warning: {};\n", warning));
+            css.push_str(&format!("  --sf-warning: {};\n", warning));
         }
         if let Some(error) = colors["error"].as_str() {
-            css.push_str(&format!("  --color-error: {};\n", error));
+            css.push_str(&format!("  --sf-error: {};\n", error));
         }
         
         // Custom colors
         if let Some(custom) = colors["custom"].as_array() {
             for color_obj in custom {
                 if let (Some(name), Some(value)) = (color_obj["name"].as_str(), color_obj["value"].as_str()) {
-                    css.push_str(&format!("  --color-{}: {};\n", name, value));
+                    css.push_str(&format!("  --sf-{}: {};\n", name, value));
                 }
             }
         }
@@ -264,7 +264,7 @@ pub fn generate_css(theme_json: &str) -> String {
         if let Some(default_shadows) = shadows["default"].as_array() {
             for token in default_shadows {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
-                    css.push_str(&format!("  --shadow-{}: {};\n", name, value));
+                    css.push_str(&format!("  --sf-shadow-{}: {};\n", name, value));
                 }
             }
         }
@@ -272,7 +272,7 @@ pub fn generate_css(theme_json: &str) -> String {
         if let Some(custom_shadows) = shadows["custom"].as_array() {
             for token in custom_shadows {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
-                    css.push_str(&format!("  --shadow-{}: {};\n", name, value));
+                    css.push_str(&format!("  --sf-shadow-{}: {};\n", name, value));
                 }
             }
         }
@@ -316,9 +316,9 @@ pub fn generate_scss(theme_json: &str) -> String {
     }
     scss.push_str("\n");
 
-    // SCSS Variables
+    // SCSS Variables with sf- prefix
     scss.push_str("// Theme SCSS Variables\n");
-    scss.push_str("$theme: (\n");
+    scss.push_str("$sf-theme: (\n");
     
     // Light mode colors
     if let Some(colors) = theme["colors"]["light"].as_object() {
@@ -373,7 +373,7 @@ pub fn generate_scss(theme_json: &str) -> String {
     
     // Base Tokens - Spacing
     scss.push_str("// Spacing Tokens\n");
-    scss.push_str("$spacing: (\n");
+    scss.push_str("$sf-spacing: (\n");
     if let Some(spacing) = theme["baseTokens"]["spacing"].as_array() {
         for token in spacing {
             if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
@@ -385,7 +385,7 @@ pub fn generate_scss(theme_json: &str) -> String {
     
     // Base Tokens - Radius
     scss.push_str("// Radius Tokens\n");
-    scss.push_str("$radius: (\n");
+    scss.push_str("$sf-radius: (\n");
     if let Some(radius) = theme["baseTokens"]["radius"].as_array() {
         for token in radius {
             if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
@@ -399,7 +399,7 @@ pub fn generate_scss(theme_json: &str) -> String {
     scss.push_str("// Typography Tokens\n");
     if let Some(typography) = theme["baseTokens"]["typography"].as_object() {
         // Font sizes
-        scss.push_str("$font-sizes: (\n");
+        scss.push_str("$sf-font-sizes: (\n");
         if let Some(font_sizes) = typography["fontSizes"].as_array() {
             for token in font_sizes {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
@@ -410,7 +410,7 @@ pub fn generate_scss(theme_json: &str) -> String {
         scss.push_str(");\n\n");
         
         // Line heights
-        scss.push_str("$line-heights: (\n");
+        scss.push_str("$sf-line-heights: (\n");
         if let Some(line_heights) = typography["lineHeights"].as_array() {
             for token in line_heights {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
@@ -421,7 +421,7 @@ pub fn generate_scss(theme_json: &str) -> String {
         scss.push_str(");\n\n");
         
         // Font weights
-        scss.push_str("$font-weights: (\n");
+        scss.push_str("$sf-font-weights: (\n");
         if let Some(font_weights) = typography["fontWeights"].as_array() {
             for token in font_weights {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
@@ -434,7 +434,7 @@ pub fn generate_scss(theme_json: &str) -> String {
     
     // Shadows
     scss.push_str("// Shadow Tokens\n");
-    scss.push_str("$shadows: (\n");
+    scss.push_str("$sf-shadows: (\n");
     if let Some(shadows) = theme["shadows"].as_object() {
         if let Some(default_shadows) = shadows["default"].as_array() {
             for token in default_shadows {
@@ -455,7 +455,7 @@ pub fn generate_scss(theme_json: &str) -> String {
     
     // Fonts
     scss.push_str("// Font Families\n");
-    scss.push_str("$fonts: (\n");
+    scss.push_str("$sf-fonts: (\n");
     if let Some(sans) = theme["fonts"]["sans"].as_object() {
         if let Some(name) = sans["name"].as_str() {
             scss.push_str(&format!("  sans: '{}',\n", name));
@@ -469,7 +469,7 @@ pub fn generate_scss(theme_json: &str) -> String {
     scss.push_str(");\n\n");
     
     // Dark mode colors
-    scss.push_str("$theme-dark: (\n");
+    scss.push_str("$sf-theme-dark: (\n");
     if let Some(colors) = theme["colors"]["dark"].as_object() {
         if let Some(primary) = colors["primary"].as_str() {
             scss.push_str(&format!("  primary: {},\n", primary));
@@ -556,9 +556,9 @@ pub fn generate_sass(theme_json: &str) -> String {
     }
     sass.push_str("\n");
 
-    // SASS Variables
+    // SASS Variables with sf- prefix
     sass.push_str("// Theme SASS Variables\n");
-    sass.push_str("$theme: (\n");
+    sass.push_str("$sf-theme: (\n");
     
     // Light mode colors
     if let Some(colors) = theme["colors"]["light"].as_object() {
@@ -613,7 +613,7 @@ pub fn generate_sass(theme_json: &str) -> String {
     
     // Base Tokens - Spacing
     sass.push_str("// Spacing Tokens\n");
-    sass.push_str("$spacing: (\n");
+    sass.push_str("$sf-spacing: (\n");
     if let Some(spacing) = theme["baseTokens"]["spacing"].as_array() {
         for token in spacing {
             if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
@@ -625,7 +625,7 @@ pub fn generate_sass(theme_json: &str) -> String {
     
     // Base Tokens - Radius
     sass.push_str("// Radius Tokens\n");
-    sass.push_str("$radius: (\n");
+    sass.push_str("$sf-radius: (\n");
     if let Some(radius) = theme["baseTokens"]["radius"].as_array() {
         for token in radius {
             if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
@@ -639,7 +639,7 @@ pub fn generate_sass(theme_json: &str) -> String {
     sass.push_str("// Typography Tokens\n");
     if let Some(typography) = theme["baseTokens"]["typography"].as_object() {
         // Font sizes
-        sass.push_str("$font-sizes: (\n");
+        sass.push_str("$sf-font-sizes: (\n");
         if let Some(font_sizes) = typography["fontSizes"].as_array() {
             for token in font_sizes {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
@@ -650,7 +650,7 @@ pub fn generate_sass(theme_json: &str) -> String {
         sass.push_str(")\n\n");
         
         // Line heights
-        sass.push_str("$line-heights: (\n");
+        sass.push_str("$sf-line-heights: (\n");
         if let Some(line_heights) = typography["lineHeights"].as_array() {
             for token in line_heights {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
@@ -661,7 +661,7 @@ pub fn generate_sass(theme_json: &str) -> String {
         sass.push_str(")\n\n");
         
         // Font weights
-        sass.push_str("$font-weights: (\n");
+        sass.push_str("$sf-font-weights: (\n");
         if let Some(font_weights) = typography["fontWeights"].as_array() {
             for token in font_weights {
                 if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
@@ -674,7 +674,7 @@ pub fn generate_sass(theme_json: &str) -> String {
     
     // Shadows
     sass.push_str("// Shadow Tokens\n");
-    sass.push_str("$shadows: (\n");
+    sass.push_str("$sf-shadows: (\n");
     if let Some(shadows) = theme["shadows"].as_object() {
         if let Some(default_shadows) = shadows["default"].as_array() {
             for token in default_shadows {
@@ -695,7 +695,7 @@ pub fn generate_sass(theme_json: &str) -> String {
     
     // Fonts
     sass.push_str("// Font Families\n");
-    sass.push_str("$fonts: (\n");
+    sass.push_str("$sf-fonts: (\n");
     if let Some(sans) = theme["fonts"]["sans"].as_object() {
         if let Some(name) = sans["name"].as_str() {
             sass.push_str(&format!("  sans: '{}'\n", name));
@@ -709,7 +709,7 @@ pub fn generate_sass(theme_json: &str) -> String {
     sass.push_str(")\n\n");
     
     // Dark mode colors
-    sass.push_str("$theme-dark: (\n");
+    sass.push_str("$sf-theme-dark: (\n");
     if let Some(colors) = theme["colors"]["dark"].as_object() {
         if let Some(primary) = colors["primary"].as_str() {
             sass.push_str(&format!("  primary: {}\n", primary));
@@ -770,5 +770,265 @@ pub fn generate_json(theme_json: &str) -> String {
     };
     
     serde_json::to_string_pretty(&theme).unwrap_or_else(|_| String::from("{}"))
+}
+
+#[wasm_bindgen]
+pub fn generate_tailwind(theme_json: &str) -> String {
+    let theme: serde_json::Value = match serde_json::from_str(theme_json) {
+        Ok(t) => t,
+        Err(_) => return String::from("/* Invalid theme JSON */"),
+    };
+
+    let theme_name = theme["name"].as_str().unwrap_or("Untitled Theme");
+    
+    let mut tailwind = String::from("/* =====================================================\n");
+    tailwind.push_str(&format!("   StyloFront Theme: {}\n", theme_name));
+    tailwind.push_str("   Tailwind v4 Global Theme\n");
+    tailwind.push_str("   ===================================================== */\n\n");
+
+    tailwind.push_str("@import \"tailwindcss\";\n\n");
+
+    // Font imports
+    if let Some(fonts) = theme["fonts"].as_object() {
+        if let Some(sans) = fonts["sans"].as_object() {
+            if let Some(import_url) = sans["importUrl"].as_str() {
+                if !import_url.is_empty() {
+                    tailwind.push_str(&format!("@import url('{}');\n", import_url));
+                }
+            }
+        }
+        if let Some(mono) = fonts["mono"].as_object() {
+            if let Some(import_url) = mono["importUrl"].as_str() {
+                if !import_url.is_empty() {
+                    tailwind.push_str(&format!("@import url('{}');\n", import_url));
+                }
+            }
+        }
+    }
+    tailwind.push_str("\n");
+
+    // Design Tokens - Light Mode
+    tailwind.push_str("/* -----------------------------\n");
+    tailwind.push_str("   Design Tokens\n");
+    tailwind.push_str("----------------------------- */\n");
+    tailwind.push_str(":root {\n");
+    
+    // Light mode colors
+    if let Some(colors) = theme["colors"]["light"].as_object() {
+        if let Some(primary) = colors["primary"].as_str() {
+            tailwind.push_str(&format!("  --sf-primary: {};\n", primary));
+        }
+        if let Some(primary_fg) = colors["primaryFg"].as_str() {
+            tailwind.push_str(&format!("  --sf-primary-fg: {};\n", primary_fg));
+        }
+        if let Some(secondary) = colors["secondary"].as_str() {
+            tailwind.push_str(&format!("  --sf-secondary: {};\n", secondary));
+        }
+        if let Some(secondary_fg) = colors["secondaryFg"].as_str() {
+            tailwind.push_str(&format!("  --sf-secondary-fg: {};\n", secondary_fg));
+        }
+        if let Some(background) = colors["background"].as_str() {
+            tailwind.push_str(&format!("  --sf-bg: {};\n", background));
+        }
+        if let Some(surface) = colors["surface"].as_str() {
+            tailwind.push_str(&format!("  --sf-surface: {};\n", surface));
+        }
+        if let Some(text) = colors["text"].as_str() {
+            tailwind.push_str(&format!("  --sf-text: {};\n", text));
+        }
+        if let Some(muted_text) = colors["mutedText"].as_str() {
+            tailwind.push_str(&format!("  --sf-muted-text: {};\n", muted_text));
+        }
+        if let Some(border) = colors["border"].as_str() {
+            tailwind.push_str(&format!("  --sf-border: {};\n", border));
+        }
+        if let Some(success) = colors["success"].as_str() {
+            tailwind.push_str(&format!("  --sf-success: {};\n", success));
+        }
+        if let Some(warning) = colors["warning"].as_str() {
+            tailwind.push_str(&format!("  --sf-warning: {};\n", warning));
+        }
+        if let Some(error) = colors["error"].as_str() {
+            tailwind.push_str(&format!("  --sf-error: {};\n", error));
+        }
+        
+        // Custom colors
+        if let Some(custom) = colors["custom"].as_array() {
+            for color_obj in custom {
+                if let (Some(name), Some(value)) = (color_obj["name"].as_str(), color_obj["value"].as_str()) {
+                    tailwind.push_str(&format!("  --sf-{}: {};\n", name, value));
+                }
+            }
+        }
+    }
+    
+    tailwind.push_str("\n");
+    
+    // Spacing
+    tailwind.push_str("  /* Spacing */\n");
+    if let Some(spacing) = theme["baseTokens"]["spacing"].as_array() {
+        for token in spacing {
+            if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
+                tailwind.push_str(&format!("  --sf-space-{}: {};\n", name, value));
+            }
+        }
+    }
+    
+    // Radius
+    tailwind.push_str("\n  /* Radius */\n");
+    if let Some(radius) = theme["baseTokens"]["radius"].as_array() {
+        for token in radius {
+            if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
+                tailwind.push_str(&format!("  --sf-radius-{}: {};\n", name, value));
+            }
+        }
+    }
+    
+    // Fonts
+    tailwind.push_str("\n  /* Fonts */\n");
+    if let Some(sans) = theme["fonts"]["sans"].as_object() {
+        if let Some(name) = sans["name"].as_str() {
+            tailwind.push_str(&format!("  --sf-font-sans: {}, system-ui, sans-serif;\n", name));
+        }
+    }
+    if let Some(mono) = theme["fonts"]["mono"].as_object() {
+        if let Some(name) = mono["name"].as_str() {
+            tailwind.push_str(&format!("  --sf-font-mono: \"{}\", monospace;\n", name));
+        }
+    }
+    
+    // Shadows
+    tailwind.push_str("\n  /* Shadows */\n");
+    if let Some(shadows) = theme["shadows"].as_object() {
+        if let Some(default_shadows) = shadows["default"].as_array() {
+            for token in default_shadows {
+                if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
+                    tailwind.push_str(&format!("  --sf-shadow-{}: {};\n", name, value));
+                }
+            }
+        }
+        if let Some(custom_shadows) = shadows["custom"].as_array() {
+            for token in custom_shadows {
+                if let (Some(name), Some(value)) = (token["name"].as_str(), token["value"].as_str()) {
+                    tailwind.push_str(&format!("  --sf-shadow-{}: {};\n", name, value));
+                }
+            }
+        }
+    }
+    
+    tailwind.push_str("}\n\n");
+
+    // Dark Theme
+    tailwind.push_str("/* -----------------------------\n");
+    tailwind.push_str("   Dark Theme\n");
+    tailwind.push_str("----------------------------- */\n");
+    tailwind.push_str("[data-theme=\"dark\"] {\n");
+    
+    if let Some(colors) = theme["colors"]["dark"].as_object() {
+        if let Some(primary) = colors["primary"].as_str() {
+            tailwind.push_str(&format!("  --sf-primary: {};\n", primary));
+        }
+        if let Some(primary_fg) = colors["primaryFg"].as_str() {
+            tailwind.push_str(&format!("  --sf-primary-fg: {};\n", primary_fg));
+        }
+        if let Some(secondary) = colors["secondary"].as_str() {
+            tailwind.push_str(&format!("  --sf-secondary: {};\n", secondary));
+        }
+        if let Some(secondary_fg) = colors["secondaryFg"].as_str() {
+            tailwind.push_str(&format!("  --sf-secondary-fg: {};\n", secondary_fg));
+        }
+        if let Some(background) = colors["background"].as_str() {
+            tailwind.push_str(&format!("  --sf-bg: {};\n", background));
+        }
+        if let Some(surface) = colors["surface"].as_str() {
+            tailwind.push_str(&format!("  --sf-surface: {};\n", surface));
+        }
+        if let Some(text) = colors["text"].as_str() {
+            tailwind.push_str(&format!("  --sf-text: {};\n", text));
+        }
+        if let Some(muted_text) = colors["mutedText"].as_str() {
+            tailwind.push_str(&format!("  --sf-muted-text: {};\n", muted_text));
+        }
+        if let Some(border) = colors["border"].as_str() {
+            tailwind.push_str(&format!("  --sf-border: {};\n", border));
+        }
+        if let Some(success) = colors["success"].as_str() {
+            tailwind.push_str(&format!("  --sf-success: {};\n", success));
+        }
+        if let Some(warning) = colors["warning"].as_str() {
+            tailwind.push_str(&format!("  --sf-warning: {};\n", warning));
+        }
+        if let Some(error) = colors["error"].as_str() {
+            tailwind.push_str(&format!("  --sf-error: {};\n", error));
+        }
+        
+        // Custom colors
+        if let Some(custom) = colors["custom"].as_array() {
+            for color_obj in custom {
+                if let (Some(name), Some(value)) = (color_obj["name"].as_str(), color_obj["value"].as_str()) {
+                    tailwind.push_str(&format!("  --sf-{}: {};\n", name, value));
+                }
+            }
+        }
+    }
+    
+    tailwind.push_str("}\n\n");
+
+    // Tailwind Theme Mapping
+    tailwind.push_str("/* -----------------------------\n");
+    tailwind.push_str("   Tailwind Theme Mapping\n");
+    tailwind.push_str("----------------------------- */\n");
+    tailwind.push_str("@theme {\n");
+    
+    // Colors
+    tailwind.push_str("  --color-primary: var(--sf-primary);\n");
+    tailwind.push_str("  --color-primary-fg: var(--sf-primary-fg);\n");
+    tailwind.push_str("  --color-secondary: var(--sf-secondary);\n");
+    tailwind.push_str("  --color-secondary-fg: var(--sf-secondary-fg);\n\n");
+    
+    tailwind.push_str("  --color-background: var(--sf-bg);\n");
+    tailwind.push_str("  --color-surface: var(--sf-surface);\n");
+    tailwind.push_str("  --color-text: var(--sf-text);\n");
+    tailwind.push_str("  --color-muted: var(--sf-muted-text);\n");
+    tailwind.push_str("  --color-border: var(--sf-border);\n\n");
+    
+    tailwind.push_str("  --color-success: var(--sf-success);\n");
+    tailwind.push_str("  --color-warning: var(--sf-warning);\n");
+    tailwind.push_str("  --color-error: var(--sf-error);\n\n");
+    
+    // Radius
+    if let Some(radius) = theme["baseTokens"]["radius"].as_array() {
+        for token in radius {
+            if let Some(name) = token["name"].as_str() {
+                tailwind.push_str(&format!("  --radius-{}: var(--sf-radius-{});\n", name, name));
+            }
+        }
+    }
+    tailwind.push_str("\n");
+    
+    // Fonts
+    tailwind.push_str("  --font-sans: var(--sf-font-sans);\n");
+    tailwind.push_str("  --font-mono: var(--sf-font-mono);\n\n");
+    
+    // Shadows
+    if let Some(shadows) = theme["shadows"].as_object() {
+        if let Some(default_shadows) = shadows["default"].as_array() {
+            for token in default_shadows {
+                if let Some(name) = token["name"].as_str() {
+                    tailwind.push_str(&format!("  --shadow-{}: var(--sf-shadow-{});\n", name, name));
+                }
+            }
+        }
+        if let Some(custom_shadows) = shadows["custom"].as_array() {
+            for token in custom_shadows {
+                if let Some(name) = token["name"].as_str() {
+                    tailwind.push_str(&format!("  --shadow-{}: var(--sf-shadow-{});\n", name, name));
+                }
+            }
+        }
+    }
+    
+    tailwind.push_str("}\n");
+    tailwind
 }
 

@@ -9,6 +9,8 @@ export function generate_sass(theme_json: string): string;
 
 export function generate_scss(theme_json: string): string;
 
+export function generate_tailwind(theme_json: string): string;
+
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
@@ -17,6 +19,7 @@ export interface InitOutput {
   readonly generate_json: (a: number, b: number) => [number, number];
   readonly generate_sass: (a: number, b: number) => [number, number];
   readonly generate_scss: (a: number, b: number) => [number, number];
+  readonly generate_tailwind: (a: number, b: number) => [number, number];
   readonly __wbindgen_externrefs: WebAssembly.Table;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
   readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;

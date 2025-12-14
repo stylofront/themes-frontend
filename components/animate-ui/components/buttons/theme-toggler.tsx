@@ -49,7 +49,7 @@ function ThemeTogglerButton({
   variant = 'default',
   size = 'default',
   modes = ['light', 'dark', 'system'],
-  direction = 'ltr',
+  direction = 'ttb',
   onImmediateChange,
   onClick,
   className,
@@ -86,6 +86,7 @@ function ThemeTogglerButton({
         return (
           <button
             data-slot="theme-toggler-button"
+            aria-label="Toggle theme"
             className={cn(buttonVariants({ variant, size, className }))}
             onClick={(e) => {
               onClick?.(e);

@@ -69,24 +69,24 @@ export function ExpandableTabTrigger({ value, icon: Icon, label, className }: Ex
           stiffness: 300,
           damping: 30,
         }}
-        className="flex h-10 items-center gap-2 overflow-hidden whitespace-nowrap rounded-lg bg-muted/50 hover:bg-muted px-2.5 py-2 text-muted-foreground hover:text-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors"
+        className="flex h-10 items-center gap-2 overflow-hidden whitespace-nowrap rounded-lg bg-muted/50 hover:bg-muted px-2.5 py-2  text-muted-foreground hover:text-foreground data-[state=active]:bg-primary data-[state=active]:text-primary transition-colors"
         aria-label={label}
       >
-        <Icon size={18} className="shrink-0" />
+        <Icon size={18} className="shrink-0 h-3.5 w-3.5 sm:h-4 sm:w-4" />
         <motion.span
           animate={{
             opacity: shouldExpand ? 1 : 0,
             x: shouldExpand ? 0 : -4,
-            scale: shouldExpand ? 1 : 0.8,
+            scale: shouldExpand ? 1 : 0.95,
           }}
           transition={{
             type: 'spring',
-            stiffness: 300,
-            damping: 30,
+            stiffness: 400,
+            damping: 50,
           }}
-          className="text-sm font-medium whitespace-nowrap"
+          className="text-xs sm:text-sm font-medium whitespace-nowrap"
           style={{
-            visibility: shouldExpand ? 'visible' : 'hidden',
+            display: shouldExpand ? 'block' : 'none',
             pointerEvents: shouldExpand ? 'auto' : 'none',
           }}
         >

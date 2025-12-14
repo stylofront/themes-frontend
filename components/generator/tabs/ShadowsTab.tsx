@@ -65,7 +65,7 @@ export function ShadowsTab({ theme, onChange }: ShadowsTabProps) {
               onChange={(e) => updateShadow(index, e.target.value)}
               placeholder="0 1px 2px rgba(0,0,0,0.05)"
             />
-            <Card className="p-4" style={{ boxShadow: shadow.value }}>
+            <Card className="py-2 px-4" style={{ boxShadow: shadow.value }}>
               <p className="text-sm">Preview: {shadow.name}</p>
             </Card>
           </div>

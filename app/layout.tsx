@@ -133,6 +133,15 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo2.png" type="image/png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="og:image" content="https://theme.stylofront.com/ogimage.png" />
+        <meta name="twitter:image" content="https://theme.stylofront.com/ogimage.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="StyloFront Theme Generator - Create Design Systems in Seconds" />
+        <meta name="twitter:description" content="Developer-first UI theme generator. Create production-ready design systems with visual controls." />
+        <meta name="twitter:creator" content="@stylofront" />
+        <meta name="twitter:site" content="@stylofront" />
+        <meta name="twitter:url" content="https://theme.stylofront.com" />
+        <meta name="twitter:image:alt" content="StyloFront Theme Generator" />
         <link rel="manifest" href="/manifest.json" />
         {/* Google Search Console Verification */}
         <meta name="google-site-verification" content="googlef5c90b0ba34f5df5" />

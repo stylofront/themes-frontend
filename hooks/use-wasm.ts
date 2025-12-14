@@ -7,6 +7,7 @@ interface WasmModule {
   generate_scss: (theme_json: string) => string
   generate_sass: (theme_json: string) => string
   generate_json: (theme_json: string) => string
+  generate_tailwind: (theme_json: string) => string
 }
 
 export function useWasm() {
@@ -45,6 +46,7 @@ export function useWasm() {
           generate_scss: generateScssJS,
           generate_sass: generateSassJS,
           generate_json: generateJsonJS,
+          generate_tailwind: generateTailwindJS,
         })
         setIsLoading(false)
       }
@@ -81,6 +83,13 @@ export function useWasm() {
     return generateJsonJS(themeJson)
   }
 
+  const generateTailwind = (themeJson: string): string => {
+    if (wasm) {
+      return wasm.generate_tailwind(themeJson)
+    }
+    return generateTailwindJS(themeJson)
+  }
+
   return {
     wasm,
     isLoading,
@@ -89,6 +98,7 @@ export function useWasm() {
     generateScss,
     generateSass,
     generateJson,
+    generateTailwind,
   }
 }
 
@@ -128,6 +138,15 @@ function generateJsonJS(themeJson: string): string {
     return JSON.stringify(theme, null, 2)
   } catch {
     return '{}'
+  }
+}
+
+function generateTailwindJS(themeJson: string): string {
+  try {
+    const theme = JSON.parse(themeJson)
+    return `/* Tailwind CSS generated from theme: ${theme.name || 'Untitled'} */\n@import "tailwindcss";\n\n:root { /* ... */ }`
+  } catch {
+    return '/* Invalid theme JSON */'
   }
 }
 
