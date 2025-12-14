@@ -149,7 +149,7 @@ export default function RootLayout({
       <body className={`${spaceGrotesk.className} antialiased`}>
         {/* Google Analytics */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-N9E3L7KHPN"
+          src="https://www.googletagmanager.com/gtag/js?id=G-FJPCG9BRVV"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -157,7 +157,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-N9E3L7KHPN');
+            gtag('config', 'G-FJPCG9BRVV');
           `}
         </Script>
         
