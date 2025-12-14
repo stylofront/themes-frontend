@@ -877,7 +877,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                 {theme.baseTokens.typography.fontSizes.map((size) => (
                   <p 
                     key={size.name}
-                    className="text-xs sm:text-sm break-words"
+                    className="text-xs sm:text-sm wrap-break-word"
                     style={{ 
                       fontSize: size.value,
                       lineHeight: getLineHeight('normal'),
@@ -893,7 +893,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                 {theme.baseTokens.typography.fontWeights.map((weight) => (
                   <p 
                     key={weight.name}
-                    className="text-xs sm:text-sm break-words"
+                    className="text-xs sm:text-sm wrap-break-word"
                     style={{ 
                       fontSize: getFontSize('md'),
                       fontWeight: weight.value,

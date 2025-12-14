@@ -58,7 +58,7 @@ export function CTA() {
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-7xl">
           {/* Enhanced Main CTA Card */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
