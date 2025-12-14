@@ -15,9 +15,9 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-14 items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 font-bold text-lg font-heading group">
-            <div className="relative h-7 w-7 rounded-lg bg-primary/10 p-1.5 transition-colors group-hover:bg-primary/20">
-              <Image src="/logo2.png" alt="StyloFront Logo" width={20} height={20} className="h-full w-full object-contain" priority />
-            </div>
+            {/* <div className="relative h-7 w-7 rounded-lg bg-primary/10 p-1.5 transition-colors group-hover:bg-primary/20"> */}
+              <Image src="/theme-logo-t.png" alt="StyloFront Logo" width={40} height={40} className=" object-contain" priority />
+            {/* </div> */}
             <span className="bg-linear-to-r from-foreground to-foreground/80 bg-clip-text">StyloFront</span>
         </Link>
         

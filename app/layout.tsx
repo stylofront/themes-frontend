@@ -131,10 +131,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${outfit.variable} ${spaceGrotesk.variable}`}>
       <head>
-        <link rel="icon" href="/logo2.png" type="image/png" />
+        <link rel="icon" href="/theme-logo-t.png" type="image/png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="og:image" content="https://theme.stylofront.com/ogimage.png" />
-        <meta name="twitter:image" content="https://theme.stylofront.com/ogimage.png" />
+        <meta name="og:image" content="/ogimage.png" />
+        <meta name="twitter:image" content="/ogimage.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="StyloFront Theme Generator - Create Design Systems in Seconds" />
         <meta name="twitter:description" content="Developer-first UI theme generator. Create production-ready design systems with visual controls." />
