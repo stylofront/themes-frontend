@@ -16,6 +16,13 @@ export function useShepherdTour() {
       return
     }
 
+    // Don't show tour on mobile devices
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    if (isMobile) {
+      console.log('Tour disabled on mobile devices')
+      return
+    }
+
     // Create tour
     const tour = new Shepherd.Tour({
       useModalOverlay: true,
@@ -66,7 +73,7 @@ export function useShepherdTour() {
         },
       ],
       when: {
-        show: function() {
+        show: function () {
           const el = document.querySelector('[data-tour-id="editor-panel"]')
           if (!el) {
             console.warn('Editor panel not found, skipping to next step')
@@ -95,7 +102,7 @@ export function useShepherdTour() {
         },
       ],
       when: {
-        show: function() {
+        show: function () {
           const el = document.querySelector('[data-tour-id="preview-panel"]')
           if (!el) {
             console.warn('Preview panel not found, skipping to next step')
@@ -123,7 +130,7 @@ export function useShepherdTour() {
         },
       ],
       when: {
-        show: function() {
+        show: function () {
           const el = document.querySelector('[data-tour-id="preview-tabs"]')
           if (!el) {
             console.warn('Preview tabs not found, skipping to next step')
@@ -151,7 +158,7 @@ export function useShepherdTour() {
         },
       ],
       when: {
-        show: function() {
+        show: function () {
           const el = document.querySelector('[data-tour-id="export-btn"]')
           if (!el) {
             console.warn('Export button not found, skipping to next step')
@@ -183,7 +190,7 @@ export function useShepherdTour() {
       if (currentStep) {
         const stepIndex = tour.steps.indexOf(currentStep)
         const footer = currentStep.getElement()?.querySelector('.shepherd-footer')
-        
+
         if (footer) {
           let progress = footer.querySelector('.tour-progress')
           if (!progress) {
