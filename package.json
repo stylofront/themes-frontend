@@ -34,6 +34,7 @@
     "react-dom": "^19.2.3",
     "react-resizable-panels": "^2.0.9",
     "react-use-measure": "^2.1.7",
+    "shepherd.js": "^14.5.1",
     "sonner": "^1.4.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7"

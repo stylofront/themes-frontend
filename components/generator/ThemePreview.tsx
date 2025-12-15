@@ -73,22 +73,22 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
     // Handles both hex (#3b82f6) and HSL (hsl(221.2 83.2% 53.3%) or "221.2 83.2% 53.3%") formats
     const getHslValue = (color: string): string => {
       if (!color) return '0 0% 0%'
-      
+
       // If it's already in HSL format without hsl() wrapper (space-separated)
       if (/^\d+\.?\d*\s+\d+\.?\d*%\s+\d+\.?\d*%$/.test(color.trim())) {
         return color.trim()
       }
-      
+
       // If it's in hsl() format, extract the values
       if (color.startsWith('hsl(')) {
         return color.slice(4, -1).trim()
       }
-      
+
       // If it's a hex color, convert to HSL
       if (color.startsWith('#')) {
         return hexToHsl(color)
       }
-      
+
       // Default fallback
       return color
     }
@@ -169,17 +169,17 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
       '--font-sans': theme.fonts.sans.name,
       '--font-mono': theme.fonts.mono.name,
     }
-    
+
     // Spacing tokens
     theme.baseTokens.spacing.forEach(token => {
       style[`--space-${token.name}`] = token.value
     })
-    
+
     // Radius tokens
     theme.baseTokens.radius.forEach(token => {
       style[`--radius-${token.name}`] = token.value
     })
-    
+
     // Typography tokens
     theme.baseTokens.typography.fontSizes.forEach(token => {
       style[`--text-${token.name}`] = token.value
@@ -190,12 +190,12 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
     theme.baseTokens.typography.fontWeights.forEach(token => {
       style[`--font-${token.name}`] = token.value
     })
-    
+
     // Shadow tokens
     theme.shadows.default.forEach(token => {
       style[`--shadow-${token.name}`] = token.value
     })
-    
+
     return style
   }, [colors, theme.fonts, theme.baseTokens, theme.shadows])
 
@@ -207,7 +207,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
     const lineHeightMap = new Map(theme.baseTokens.typography.lineHeights.map(l => [l.name, l.value]))
     const fontWeightMap = new Map(theme.baseTokens.typography.fontWeights.map(w => [w.name, w.value]))
     const shadowMap = new Map(theme.shadows.default.map(s => [s.name, s.value]))
-    
+
     return {
       spacing: spacingMap,
       radius: radiusMap,
@@ -226,7 +226,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
   const getShadow = useCallback((name: string) => tokenMaps.shadow.get(name) || 'none', [tokenMaps.shadow])
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col" data-tour-id="preview-panel">
       {/* Header with fixed styles - not affected by theme */}
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-md border-b shadow-sm p-3 sm:p-4 shrink-0">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-2">
@@ -235,10 +235,11 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
             <p className="text-xs sm:text-sm text-muted-foreground">See your theme changes in real-time</p>
           </div>
           <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-            <Button 
+            <Button
               onClick={onExport}
               className="shadow-md hover:shadow-lg transition-shadow text-xs sm:text-sm h-8 sm:h-9"
               size="sm"
+              data-tour-id="export-btn"
             >
               <Download className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
               <span className="inline">Export</span>
@@ -291,7 +292,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
       <div className={`flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 ${viewMode === 'mobile' ? 'max-w-md mx-auto' : ''}`}>
         {/* Tabs outside theme style scope to use project theme */}
         <Tabs defaultValue="colors" className="w-full">
-          <TabsList className="flex w-full gap-1.5 sm:gap-2 flex-wrap mb-4 sm:mb-6 bg-muted/50 backdrop-blur-sm border border-border">
+          <TabsList className="flex w-full gap-1.5 sm:gap-2 flex-wrap mb-4 sm:mb-6 bg-muted/50 backdrop-blur-sm border border-border" data-tour-id="preview-tabs">
             <ExpandableTabTrigger value="colors" icon={Palette} label="Colors" />
             <ExpandableTabTrigger value="spacing" icon={Ruler} label="Spacing" />
             <ExpandableTabTrigger value="radius" icon={Circle} label="Radius" />
@@ -301,123 +302,123 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
           </TabsList>
 
           {/* Content with theme styles - isolated from main theme */}
-          <div 
+          <div
             data-preview-theme
-            className="space-y-4 sm:space-y-6" 
+            className="space-y-4 sm:space-y-6"
             style={{
-              ...themeStyle, 
+              ...themeStyle,
               backgroundColor: `var(--color-background)`,
               color: `var(--color-text)`,
               fontFamily: `${theme.fonts.sans.name}, system-ui, sans-serif`,
             }}>
             {/* Spacing Section */}
             <TabsContent value="spacing" className="mt-0">
-              <Card style={{ 
-            backgroundColor: `var(--color-surface)`,
-            borderColor: `var(--color-border)`,
-            borderRadius: getRadius('lg'),
-            padding: getSpacing('lg'),
-          }}>
-            <CardHeader>
-              <CardTitle>Spacing Tokens</CardTitle>
-              <CardDescription style={{ color: `var(--color-muted-text)` }}>
-                Visual representation of spacing values
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2 sm:space-y-3">
-              {theme.baseTokens.spacing.map((spacing) => (
-                <div key={spacing.name} className="flex items-center gap-2 sm:gap-4">
-                  <div className="w-12 sm:w-20 text-xs sm:text-sm font-medium shrink-0">{spacing.name}</div>
-                  <div className="flex-1 h-6 sm:h-8 rounded" style={{ 
-                    backgroundColor: `var(--color-primary)`,
-                    width: spacing.value,
-                    opacity: 0.7,
-                    borderRadius: getRadius('sm'),
-                  }} />
-                  <div className="text-xs shrink-0" style={{ color: `var(--color-muted-text)` }}>{spacing.value}</div>
-                </div>
-              ))}
-            </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Radius Section */}
-            <TabsContent value="radius" className="mt-0">
-              <Card style={{ 
+              <Card style={{
                 backgroundColor: `var(--color-surface)`,
                 borderColor: `var(--color-border)`,
                 borderRadius: getRadius('lg'),
                 padding: getSpacing('lg'),
               }}>
-            <CardHeader>
-              <CardTitle>Border Radius Tokens</CardTitle>
-              <CardDescription style={{ color: `var(--color-muted-text)` }}>
-                Different border radius values applied to squares
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-3 sm:gap-4">
-                {theme.baseTokens.radius.map((radius) => (
-                  <div key={radius.name} className="text-center">
-                    <div 
-                      className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-1.5 sm:mb-2"
-                      style={{ 
+                <CardHeader>
+                  <CardTitle>Spacing Tokens</CardTitle>
+                  <CardDescription style={{ color: `var(--color-muted-text)` }}>
+                    Visual representation of spacing values
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2 sm:space-y-3">
+                  {theme.baseTokens.spacing.map((spacing) => (
+                    <div key={spacing.name} className="flex items-center gap-2 sm:gap-4">
+                      <div className="w-12 sm:w-20 text-xs sm:text-sm font-medium shrink-0">{spacing.name}</div>
+                      <div className="flex-1 h-6 sm:h-8 rounded" style={{
                         backgroundColor: `var(--color-primary)`,
-                        borderRadius: radius.value,
-                      }}
-                    />
-                    <div className="text-xs font-medium">{radius.name}</div>
-                    <div className="text-xs" style={{ color: `var(--color-muted-text)` }}>{radius.value}</div>
+                        width: spacing.value,
+                        opacity: 0.7,
+                        borderRadius: getRadius('sm'),
+                      }} />
+                      <div className="text-xs shrink-0" style={{ color: `var(--color-muted-text)` }}>{spacing.value}</div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Radius Section */}
+            <TabsContent value="radius" className="mt-0">
+              <Card style={{
+                backgroundColor: `var(--color-surface)`,
+                borderColor: `var(--color-border)`,
+                borderRadius: getRadius('lg'),
+                padding: getSpacing('lg'),
+              }}>
+                <CardHeader>
+                  <CardTitle>Border Radius Tokens</CardTitle>
+                  <CardDescription style={{ color: `var(--color-muted-text)` }}>
+                    Different border radius values applied to squares
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-3 sm:gap-4">
+                    {theme.baseTokens.radius.map((radius) => (
+                      <div key={radius.name} className="text-center">
+                        <div
+                          className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-1.5 sm:mb-2"
+                          style={{
+                            backgroundColor: `var(--color-primary)`,
+                            borderRadius: radius.value,
+                          }}
+                        />
+                        <div className="text-xs font-medium">{radius.name}</div>
+                        <div className="text-xs" style={{ color: `var(--color-muted-text)` }}>{radius.value}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </CardContent>
+                </CardContent>
               </Card>
             </TabsContent>
 
             {/* Components Section */}
             <TabsContent value="components" className="mt-0 p-4 space-y-6">
-          {/* Sample Cards */}
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card style={{ 
-              backgroundColor: `var(--color-surface)`,
-              borderColor: `var(--color-border)`,
-              borderRadius: getRadius('md'),
-              boxShadow: getShadow('sm'),
-              padding: getSpacing('lg'),
-            }}>
-              <CardHeader>
-                <CardTitle>Card with Small Shadow</CardTitle>
-                <CardDescription style={{ color: `var(--color-muted-text)` }}>
-                  This card uses spacing, radius, and shadow tokens
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p style={{ fontSize: getFontSize('sm') }}>Card content with custom spacing and typography</p>
-              </CardContent>
-            </Card>
+              {/* Sample Cards */}
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card style={{
+                  backgroundColor: `var(--color-surface)`,
+                  borderColor: `var(--color-border)`,
+                  borderRadius: getRadius('md'),
+                  boxShadow: getShadow('sm'),
+                  padding: getSpacing('lg'),
+                }}>
+                  <CardHeader>
+                    <CardTitle>Card with Small Shadow</CardTitle>
+                    <CardDescription style={{ color: `var(--color-muted-text)` }}>
+                      This card uses spacing, radius, and shadow tokens
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p style={{ fontSize: getFontSize('sm') }}>Card content with custom spacing and typography</p>
+                  </CardContent>
+                </Card>
 
-            <Card style={{ 
-              backgroundColor: `var(--color-surface)`,
-              borderColor: `var(--color-border)`,
+                <Card style={{
+                  backgroundColor: `var(--color-surface)`,
+                  borderColor: `var(--color-border)`,
                   borderRadius: getRadius('lg'),
                   boxShadow: getShadow('md'),
                   padding: getSpacing('xl'),
-            }}>
-              <CardHeader>
-                <CardTitle>Card with Medium Shadow</CardTitle>
-                <CardDescription style={{ color: `var(--color-muted-text)` }}>
+                }}>
+                  <CardHeader>
+                    <CardTitle>Card with Medium Shadow</CardTitle>
+                    <CardDescription style={{ color: `var(--color-muted-text)` }}>
                       Different radius and shadow values
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
                     <p style={{ fontSize: getFontSize('sm') }}>Card content with larger spacing</p>
-              </CardContent>
-            </Card>
-          </div>
+                  </CardContent>
+                </Card>
+              </div>
 
-          {/* Buttons */}
-              <Card style={{ 
+              {/* Buttons */}
+              <Card style={{
                 backgroundColor: `var(--color-surface)`,
                 borderColor: `var(--color-border)`,
                 borderRadius: getRadius('lg'),
@@ -430,37 +431,37 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-          <div className="flex flex-wrap gap-2 sm:gap-4">
-            <Button style={{ 
-              backgroundColor: `var(--color-primary)`,
-              color: `var(--color-primary-fg)`,
+                  <div className="flex flex-wrap gap-2 sm:gap-4">
+                    <Button style={{
+                      backgroundColor: `var(--color-primary)`,
+                      color: `var(--color-primary-fg)`,
                       borderRadius: getRadius('md'),
                       padding: `${getSpacing('sm')} ${getSpacing('lg')}`,
                       fontFamily: `${theme.fonts.sans.name}, system-ui, sans-serif`,
-            }} className="text-xs sm:text-sm">
-              Primary Button
-            </Button>
-            <Button variant="outline" style={{ 
-              borderColor: `var(--color-border)`,
+                    }} className="text-xs sm:text-sm">
+                      Primary Button
+                    </Button>
+                    <Button variant="outline" style={{
+                      borderColor: `var(--color-border)`,
                       borderRadius: getRadius('md'),
                       padding: `${getSpacing('sm')} ${getSpacing('lg')}`,
-            }} className="text-xs sm:text-sm">
-              Outline Button
-            </Button>
-            <Button variant="secondary" style={{ 
-              backgroundColor: `var(--color-secondary)`,
-              color: `var(--color-secondary-fg)`,
+                    }} className="text-xs sm:text-sm">
+                      Outline Button
+                    </Button>
+                    <Button variant="secondary" style={{
+                      backgroundColor: `var(--color-secondary)`,
+                      color: `var(--color-secondary-fg)`,
                       borderRadius: getRadius('md'),
                       padding: `${getSpacing('sm')} ${getSpacing('lg')}`,
-            }} className="text-xs sm:text-sm">
-              Secondary Button
-            </Button>
-          </div>
+                    }} className="text-xs sm:text-sm">
+                      Secondary Button
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
 
               {/* Form Elements */}
-              <Card style={{ 
+              <Card style={{
                 backgroundColor: `var(--color-surface)`,
                 borderColor: `var(--color-border)`,
                 borderRadius: getRadius('lg'),
@@ -473,9 +474,9 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2 sm:space-y-3">
-                  <Input 
+                  <Input
                     placeholder="Sample input field"
-                    style={{ 
+                    style={{
                       borderColor: `var(--color-border)`,
                       borderRadius: getRadius('md'),
                       padding: `${getSpacing('sm')} ${getSpacing('md')}`,
@@ -483,9 +484,9 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     }}
                     className="text-sm"
                   />
-                  <Input 
+                  <Input
                     placeholder="Input with different radius"
-                    style={{ 
+                    style={{
                       borderColor: `var(--color-border)`,
                       borderRadius: getRadius('lg'),
                       padding: `${getSpacing('sm')} ${getSpacing('md')}`,
@@ -500,7 +501,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
             {/* Shadows Section */}
             <TabsContent value="shadows" className="mt-0 space-y-4 sm:space-y-6">
               {/* Status Colors & Shadows */}
-              <Card style={{ 
+              <Card style={{
                 backgroundColor: `var(--color-surface)`,
                 borderColor: `var(--color-border)`,
                 borderRadius: getRadius('lg'),
@@ -513,44 +514,44 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 sm:space-y-4">
-          <div className="flex flex-wrap gap-2 sm:gap-4">
-            <Badge style={{ 
-              backgroundColor: `var(--color-success)`,
-              color: `var(--color-text)`,
+                  <div className="flex flex-wrap gap-2 sm:gap-4">
+                    <Badge style={{
+                      backgroundColor: `var(--color-success)`,
+                      color: `var(--color-text)`,
                       borderRadius: getRadius('md'),
                       padding: `${getSpacing('xs')} ${getSpacing('sm')}`,
-            }}>
-              Success
-            </Badge>
-            <Badge style={{ 
-              backgroundColor: `var(--color-warning)`,
-              color: `var(--color-text)`,
+                    }}>
+                      Success
+                    </Badge>
+                    <Badge style={{
+                      backgroundColor: `var(--color-warning)`,
+                      color: `var(--color-text)`,
                       borderRadius: getRadius('md'),
                       padding: `${getSpacing('xs')} ${getSpacing('sm')}`,
-            }}>
-              Warning
-            </Badge>
-            <Badge style={{ 
-              backgroundColor: `var(--color-error)`,
-              color: `var(--color-text)`,
+                    }}>
+                      Warning
+                    </Badge>
+                    <Badge style={{
+                      backgroundColor: `var(--color-error)`,
+                      color: `var(--color-text)`,
                       borderRadius: getRadius('md'),
                       padding: `${getSpacing('xs')} ${getSpacing('sm')}`,
-            }}>
-              Error
-            </Badge>
-          </div>
+                    }}>
+                      Error
+                    </Badge>
+                  </div>
 
                   {/* Default Shadows */}
                   <div className="space-y-3">
                     <h4 className="text-sm font-semibold">Default Shadows</h4>
                     <div className="grid gap-4 md:grid-cols-2">
                       {theme.shadows.default.map((shadow) => (
-                        <Card 
+                        <Card
                           key={shadow.name}
-              style={{ 
+                          style={{
                             boxShadow: shadow.value,
                             backgroundColor: `var(--color-background)`,
-                borderColor: `var(--color-border)`,
+                            borderColor: `var(--color-border)`,
                             borderRadius: getRadius('md'),
                           }}
                         >
@@ -559,15 +560,15 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                             <p className="text-xs mt-1" style={{ color: `var(--color-muted-text)` }}>{shadow.value}</p>
                           </CardContent>
                         </Card>
-                ))}
-              </div>
-            </div>
+                      ))}
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
 
-          {/* Custom Shadows */}
-          {theme.shadows.custom.length > 0 && (
-                <Card style={{ 
+              {/* Custom Shadows */}
+              {theme.shadows.custom.length > 0 && (
+                <Card style={{
                   backgroundColor: `var(--color-surface)`,
                   borderColor: `var(--color-border)`,
                   borderRadius: getRadius('lg'),
@@ -580,33 +581,33 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-              <div className="grid gap-4 md:grid-cols-2">
-                {theme.shadows.custom.map((shadow, index) => (
-                        <Card 
-                          key={index} 
-                          style={{ 
+                    <div className="grid gap-4 md:grid-cols-2">
+                      {theme.shadows.custom.map((shadow, index) => (
+                        <Card
+                          key={index}
+                          style={{
                             boxShadow: shadow.value,
                             backgroundColor: `var(--color-background)`,
                             borderColor: `var(--color-border)`,
                             borderRadius: getRadius('md'),
                           }}
                         >
-                    <CardContent className="p-4">
-                      <p className="text-sm font-medium">{shadow.name}</p>
+                          <CardContent className="p-4">
+                            <p className="text-sm font-medium">{shadow.name}</p>
                             <p className="text-xs mt-1" style={{ color: `var(--color-muted-text)` }}>{shadow.value}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               )}
             </TabsContent>
 
             {/* Colors Section */}
-            <TabsContent value="colors" className="mt-0 space-y-4 sm:space-y-6">
+            <TabsContent value="colors" className="mt-0 space-y-4 sm:space-y-6 rounded-lg">
               {/* Default Colors */}
-              <Card style={{ 
+              <Card style={{
                 backgroundColor: `var(--color-surface)`,
                 borderColor: `var(--color-border)`,
                 borderRadius: getRadius('lg'),
@@ -624,7 +625,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.primary,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -639,7 +640,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.primaryFg,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -656,7 +657,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.secondary,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -671,7 +672,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.secondaryFg,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -688,7 +689,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.background,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -703,7 +704,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.surface,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -720,7 +721,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.text,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -735,7 +736,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.mutedText,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -752,7 +753,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.border,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -769,7 +770,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.success,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -784,7 +785,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-24 w-full rounded-lg border-2 mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.warning,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -799,7 +800,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                     <div className="text-center space-y-2">
                       <div
                         className="h-20 sm:h-24 w-full rounded-lg border-2 mb-1.5 sm:mb-2 shadow-sm"
-                        style={{ 
+                        style={{
                           backgroundColor: colors.error,
                           borderColor: `var(--color-border)`,
                           borderRadius: getRadius('md'),
@@ -817,7 +818,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
 
               {/* Custom Colors */}
               {colors.custom.length > 0 && (
-                <Card style={{ 
+                <Card style={{
                   backgroundColor: `var(--color-surface)`,
                   borderColor: `var(--color-border)`,
                   borderRadius: getRadius('lg'),
@@ -835,7 +836,7 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
                         <div key={index} className="text-center space-y-2">
                           <div
                             className="h-20 sm:h-24 w-full rounded-lg border-2 mb-1.5 sm:mb-2 shadow-sm"
-                            style={{ 
+                            style={{
                               backgroundColor: color.value,
                               borderColor: `var(--color-border)`,
                               borderRadius: getRadius('md'),
@@ -856,69 +857,69 @@ export const ThemePreview = memo(function ThemePreview({ theme, onExport }: Them
 
             {/* Typography Section */}
             <TabsContent value="typography" className="mt-0">
-          <Card style={{ 
-            backgroundColor: `var(--color-surface)`,
-            borderColor: `var(--color-border)`,
-            borderRadius: getRadius('lg'),
-            padding: getSpacing('lg'),
-          }}>
-            <CardHeader>
-              <CardTitle style={{ 
-                fontSize: getFontSize('lg'),
-                fontWeight: getFontWeight('semibold'),
-                lineHeight: getLineHeight('tight'),
-              }}>Typography</CardTitle>
-              <CardDescription style={{ color: `var(--color-muted-text)` }}>
-                Test all typography tokens including font sizes, weights, and line heights
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 sm:space-y-4">
-              <div className="space-y-1.5 sm:space-y-2">
-                {theme.baseTokens.typography.fontSizes.map((size) => (
-                  <p 
-                    key={size.name}
-                    className="text-xs sm:text-sm wrap-break-word"
-                    style={{ 
-                      fontSize: size.value,
-                      lineHeight: getLineHeight('normal'),
-                      fontFamily: `${theme.fonts.sans.name}, system-ui, sans-serif`,
-                      color: `var(--color-text)`,
-                    }}
-                  >
-                    <span className="font-medium">Font Size {size.name}:</span> {size.value} - The quick brown fox jumps over the lazy dog
-                  </p>
-                ))}
-              </div>
-              <div className="space-y-1.5 sm:space-y-2">
-                {theme.baseTokens.typography.fontWeights.map((weight) => (
-                  <p 
-                    key={weight.name}
-                    className="text-xs sm:text-sm wrap-break-word"
-                    style={{ 
-                      fontSize: getFontSize('md'),
-                      fontWeight: weight.value,
-                      fontFamily: `${theme.fonts.sans.name}, system-ui, sans-serif`,
-                      color: `var(--color-text)`,
-                    }}
-                  >
-                    <span className="font-medium">Font Weight {weight.name}:</span> {weight.value} - The quick brown fox jumps over the lazy dog
-                  </p>
-                ))}
-              </div>
-              <div className="p-3 sm:p-4 rounded text-xs sm:text-sm" style={{ 
-                backgroundColor: `var(--color-background)`,
-                border: `1px solid var(--color-border)`,
-                borderRadius: getRadius('md'),
-                fontFamily: `${theme.fonts.mono.name}, monospace`,
-                fontSize: getFontSize('sm'),
-                color: `var(--color-text)`,
+              <Card style={{
+                backgroundColor: `var(--color-surface)`,
+                borderColor: `var(--color-border)`,
+                borderRadius: getRadius('lg'),
+                padding: getSpacing('lg'),
               }}>
-                Monospace Font: {theme.fonts.mono.name} - const example = "Hello World";
-              </div>
-            </CardContent>
-          </Card>
+                <CardHeader>
+                  <CardTitle style={{
+                    fontSize: getFontSize('lg'),
+                    fontWeight: getFontWeight('semibold'),
+                    lineHeight: getLineHeight('tight'),
+                  }}>Typography</CardTitle>
+                  <CardDescription style={{ color: `var(--color-muted-text)` }}>
+                    Test all typography tokens including font sizes, weights, and line heights
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3 sm:space-y-4">
+                  <div className="space-y-1.5 sm:space-y-2">
+                    {theme.baseTokens.typography.fontSizes.map((size) => (
+                      <p
+                        key={size.name}
+                        className="text-xs sm:text-sm wrap-break-word"
+                        style={{
+                          fontSize: size.value,
+                          lineHeight: getLineHeight('normal'),
+                          fontFamily: `${theme.fonts.sans.name}, system-ui, sans-serif`,
+                          color: `var(--color-text)`,
+                        }}
+                      >
+                        <span className="font-medium">Font Size {size.name}:</span> {size.value} - The quick brown fox jumps over the lazy dog
+                      </p>
+                    ))}
+                  </div>
+                  <div className="space-y-1.5 sm:space-y-2">
+                    {theme.baseTokens.typography.fontWeights.map((weight) => (
+                      <p
+                        key={weight.name}
+                        className="text-xs sm:text-sm wrap-break-word"
+                        style={{
+                          fontSize: getFontSize('md'),
+                          fontWeight: weight.value,
+                          fontFamily: `${theme.fonts.sans.name}, system-ui, sans-serif`,
+                          color: `var(--color-text)`,
+                        }}
+                      >
+                        <span className="font-medium">Font Weight {weight.name}:</span> {weight.value} - The quick brown fox jumps over the lazy dog
+                      </p>
+                    ))}
+                  </div>
+                  <div className="p-3 sm:p-4 rounded text-xs sm:text-sm" style={{
+                    backgroundColor: `var(--color-background)`,
+                    border: `1px solid var(--color-border)`,
+                    borderRadius: getRadius('md'),
+                    fontFamily: `${theme.fonts.mono.name}, monospace`,
+                    fontSize: getFontSize('sm'),
+                    color: `var(--color-text)`,
+                  }}>
+                    Monospace Font: {theme.fonts.mono.name} - const example = "Hello World";
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
-        </div>
+          </div>
         </Tabs>
       </div>
     </div>

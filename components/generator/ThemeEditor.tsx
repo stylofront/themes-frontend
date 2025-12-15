@@ -20,7 +20,7 @@ interface ThemeEditorProps {
 
 export const ThemeEditor = memo(function ThemeEditor({ theme, onChange }: ThemeEditorProps) {
   return (
-    <div className="flex h-full flex-col bg-linear-to-b from-card to-card/50">
+    <div className="flex h-full flex-col bg-linear-to-b from-card to-card/50" >
       <div className="border-b bg-linear-to-r from-primary/5 to-secondary/5 p-3 sm:p-4 backdrop-blur-sm shrink-0">
         <h2 className="text-lg sm:text-xl font-bold font-heading bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">Theme Editor</h2>
         <p className="text-xs sm:text-sm text-muted-foreground mt-1">Customize your theme settings</p>
@@ -62,6 +62,6 @@ export const ThemeEditor = memo(function ThemeEditor({ theme, onChange }: ThemeE
           </TabsContent>
         </Tabs>
       </ScrollArea>
-    </div>
+        </div>
   )
 })

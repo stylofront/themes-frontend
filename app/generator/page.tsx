@@ -1,6 +1,7 @@
 "use client"
 
 import { useTheme } from "@/hooks/use-theme"
+import { useShepherdTour } from "@/hooks/use-shepherd-tour"
 import { ThemeEditor } from "@/components/generator/ThemeEditor"
 import { ThemePreview } from "@/components/generator/ThemePreview"
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable"
@@ -11,6 +12,7 @@ import { Settings, Eye } from "lucide-react"
 
 export default function GeneratorPage() {
   const { theme, updateTheme } = useTheme()
+  useShepherdTour() // Initialize tour
   const [exportOpen, setExportOpen] = useState(false)
   const [mobileView, setMobileView] = useState<'editor' | 'preview'>('editor')
 
@@ -65,7 +67,7 @@ export default function GeneratorPage() {
       <div className="hidden lg:flex flex-1 overflow-hidden p-4">
         <ResizablePanelGroup direction="horizontal" className="h-full rounded-lg border shadow-lg bg-background/50 backdrop-blur-sm">
           <ResizablePanel defaultSize={40} minSize={30} maxSize={50} className="min-w-[300px]">
-            <div className="h-full border-r bg-card/50 backdrop-blur-sm overflow-hidden rounded-l-lg">
+            <div className="h-full border-r bg-card/50 backdrop-blur-sm overflow-hidden rounded-l-lg" data-tour-id="editor-panel">
               <ThemeEditor theme={theme} onChange={updateTheme} />
             </div>
           </ResizablePanel>
